@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio | Faiq — Santri Daar El Qolam 4</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome & Devicon CDN untuk Ikon Tajam -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Poppins', 'sans-serif'],
+          },
+          colors: {
+            darqo: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       CUSTOM STYLES & ANIMATIONS
+       ========================================================================== */
+    :root {
+      --primary: #0284c7;
+      --primary-light: #38bdf8;
+    }
+
+    body {
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* Animated Mesh / Gradient Background */
+    .hero-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.14) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 30%, rgba(2, 132, 199, 0.12) 0%, transparent 50%);
+    }
+    .dark .hero-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.18) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.12) 0%, transparent 50%);
+    }
+
+    /* Typing Cursor Animation */
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.05em;
+      background-color: #0284c7;
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      animation: blink 0.85s infinite;
+    }
+    .dark .typing-cursor {
+      background-color: #38bdf8;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Floating & Orbiting Avatar Frame Animations */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-14px) rotate(1.5deg); }
+    }
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spinReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    .animate-float {
+      animation: floatSlow 5.5s ease-in-out infinite;
+    }
+    .animate-spin-slow {
+      animation: spinSlow 22s linear infinite;
+    }
+    .animate-spin-reverse {
+      animation: spinReverse 16s linear infinite;
+    }
+
+    /* Flowing SVG Wave Animation */
+    .wave-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .wave-parallax > use {
+      animation: moveWave 25s cubic-bezier(.55,.5,.45,.5) infinite;
+    }
+    .wave-parallax > use:nth-child(1) {
+      animation-delay: -2s;
+      animation-duration: 9s;
+    }
+    .wave-parallax > use:nth-child(2) {
+      animation-delay: -3s;
+      animation-duration: 13s;
+    }
+    .wave-parallax > use:nth-child(3) {
+      animation-delay: -4s;
+      animation-duration: 17s;
+    }
+    .wave-parallax > use:nth-child(4) {
+      animation-delay: -5s;
+      animation-duration: 22s;
+    }
+    @keyframes moveWave {
+      0% { transform: translate3d(-90px, 0, 0); }
+      100% { transform: translate3d(85px, 0, 0); }
+    }
+
+    /* Scroll Reveal Utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: all 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-36px);
+      transition: all 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-left.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(36px);
+      transition: all 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-right.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* 3D Tilt Skill Card */
+    .skill-card {
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .skill-card:hover {
+      box-shadow: 0 20px 35px -10px rgba(2, 132, 199, 0.25);
+    }
+    .skill-card-inner {
+      transform: translateZ(20px);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 9px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0284c7;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0369a1;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-darqo-600 selection:text-white">
+
+  <!-- Particle Canvas Background (Subtle Interactive Network) -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60 dark:opacity-40"></canvas>
+
+  <!-- ========================================================================
+       1. HEADER & NAVIGATION
+       ======================================================================== -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between rounded-2xl px-5 py-3 transition-all duration-300 bg-white/75 dark:bg-slate-900/75 backdrop-blur-md border border-slate-200/70 dark:border-slate-800/80 shadow-sm">
+      <!-- Logo -->
+      <h4 class="logo text-xl sm:text-2xl font-extrabold tracking-tight">
+        <a href="#about" class="flex items-center gap-2.5 group">
+          <span class="w-9 h-9 rounded-xl bg-gradient-to-tr from-darqo-600 to-darqo-400 text-white flex items-center justify-center shadow-md shadow-darqo-600/30 group-hover:rotate-12 transition-transform">
+            <i class="fa-solid fa-code text-sm"></i>
+          </span>
+          <span class="bg-gradient-to-r from-darqo-700 to-darqo-500 dark:from-white dark:to-darqo-300 bg-clip-text text-transparent">
+            My Portfolio
+          </span>
+        </a>
+      </h4>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:block">
+        <ul class="nav_links flex items-center gap-2 lg:gap-4 font-semibold text-sm">
+          <li>
+            <a href="#about" class="nav-link active px-3.5 py-2 rounded-xl transition-all duration-200 text-darqo-600 dark:text-darqo-400 bg-darqo-50 dark:bg-darqo-950/60">
+              About
+            </a>
+          </li>
+          <li>
+            <a href="#education" class="nav-link px-3.5 py-2 rounded-xl transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-darqo-600 dark:hover:text-darqo-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60">
+              Rekam Pendidikan
+            </a>
+          </li>
+          <li>
+            <a href="#skill" class="nav-link px-3.5 py-2 rounded-xl transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-darqo-600 dark:hover:text-darqo-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60">
+              Skills
+            </a>
+          </li>
+          <li>
+            <a href="#contact" class="nav-link px-3.5 py-2 rounded-xl transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-darqo-600 dark:hover:text-darqo-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Action Buttons: Theme Toggle, DARQO!, Mobile Hamburger -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Dark / Light Mode Toggle -->
+        <button id="theme-toggle" aria-label="Toggle Dark Mode" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-amber-400 hover:bg-darqo-100 dark:hover:bg-slate-700 flex items-center justify-center transition-all duration-200 shadow-inner">
+          <i id="theme-icon" class="fa-solid fa-moon text-base"></i>
+        </button>
+
+        <!-- DARQO! Button -->
+        <a class="nav_btn" target="_blank" rel="noopener noreferrer" href="https://prp.daarelqolam.ac.id/">
+          <button class="px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-darqo-600 to-darqo-500 hover:from-darqo-700 hover:to-darqo-600 text-white font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-darqo-600/30 hover:shadow-darqo-600/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-mosque text-xs"></i>
+            <span>DARQO!</span>
+          </button>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" aria-label="Buka Menu" class="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:bg-darqo-100 transition">
+          <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Nav -->
+    <div id="mobile-menu" class="hidden md:hidden max-w-7xl mx-auto mt-2 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border border-slate-200 dark:border-slate-800 shadow-xl p-4 transition-all">
+      <ul class="flex flex-col gap-2 font-semibold text-sm">
+        <li><a href="#about" class="mobile-nav-link block px-4 py-2.5 rounded-xl bg-darqo-50 dark:bg-darqo-950/60 text-darqo-600 dark:text-darqo-400">About</a></li>
+        <li><a href="#education" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Rekam Pendidikan</a></li>
+        <li><a href="#skill" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Skills</a></li>
+        <li><a href="#contact" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. ABOUT SECTION (#about)
+       ======================================================================== -->
+  <section id="about" class="relative pt-32 sm:pt-36 pb-0 hero-bg z-10">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 pb-12 sm:pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+
+        <!-- Left Content -->
+        <div class="about lg:col-span-7 space-y-6 reveal-left">
+          <!-- Status Badge -->
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-darqo-100/80 dark:bg-darqo-900/50 border border-darqo-200 dark:border-darqo-700/60 text-darqo-700 dark:text-darqo-300 text-xs sm:text-sm font-semibold shadow-sm">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+            <span>Santri Aktif &amp; Young Coder • Daar El Qolam 4</span>
+          </div>
+
+          <!-- Sapaan & Judul dengan Typing Effect -->
+          <div class="space-y-2">
+            <h3 class="text-xl sm:text-2xl font-bold text-darqo-600 dark:text-darqo-400 tracking-wide">
+              <span>Halo! Saya Faiq—</span>
+            </h3>
+            <h1 class="text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold text-slate-900 dark:text-white leading-tight">
+              <span id="typing-text">Saya santri di Daar El Qolam</span><span class="typing-cursor"></span>
+            </h1>
+          </div>
+
+          <!-- Deskripsi Asli (Dipertahankan utuh) -->
+          <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl bg-white/60 dark:bg-slate-900/50 backdrop-blur-sm p-5 rounded-2xl border border-slate-200/70 dark:border-slate-800/80 shadow-sm">
+            Saya adalah seorang santri di Daar El Qolam 4.
+            Saya aktif di berbagai organisasi seperti, <span class="font-semibold text-darqo-600 dark:text-darqo-400">PRAMUKA</span>, <span class="font-semibold text-darqo-600 dark:text-darqo-400">JMQ</span>, <span class="font-semibold text-darqo-600 dark:text-darqo-400">Markazi</span>,
+            dan saya juga aktif menjadi bagian dari <span class="font-semibold text-darqo-600 dark:text-darqo-400">grup coding Daar El Qolam 4</span>. Dari berbagai organisasi Saya bercita cita
+            menjadi <span class="underline decoration-darqo-500 decoration-2 underline-offset-4 font-semibold text-slate-800 dark:text-white">pengusaha sukses</span> melalui jalan yang saya pilih.
+          </p>
+
+          <!-- CTA Button & Social Links -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a class="about_btn" href="mailto:muhaisim7@gmail.com">
+              <button class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-darqo-600 via-darqo-500 to-sky-500 hover:from-darqo-700 hover:to-darqo-600 text-white font-bold text-sm sm:text-base shadow-xl shadow-darqo-600/30 hover:shadow-darqo-600/50 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Hire me</span>
+              </button>
+            </a>
+
+            <!-- About Icons -->
+            <div class="about-icons flex items-center gap-3">
+              <a href="https://www.linkedin.com/in/7muh-ismail/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                 class="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-sm text-lg">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+              <a href="https://github.com/hasyim404" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+                 class="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-sm text-lg">
+                <i class="fa-brands fa-github"></i>
+              </a>
+              <a href="https://www.facebook.com/ismailhere.7/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                 class="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-[#1877f2] hover:text-white hover:border-[#1877f2] hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-sm text-lg">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://www.instagram.com/muhh.ismail__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                 class="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-pink-500 hover:to-purple-600 hover:text-white hover:border-transparent hover:-translate-y-1 transition-all duration-200 flex items-center justify-center shadow-sm text-lg">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Highlight Badges Organisasi -->
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-3 py-1 rounded-xl text-xs font-semibold bg-amber-100/80 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-200/70 dark:border-amber-800/60">
+              <i class="fa-solid fa-campground mr-1"></i> PRAMUKA
+            </span>
+            <span class="px-3 py-1 rounded-xl text-xs font-semibold bg-emerald-100/80 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-800/60">
+              <i class="fa-solid fa-book-quran mr-1"></i> JMQ
+            </span>
+            <span class="px-3 py-1 rounded-xl text-xs font-semibold bg-purple-100/80 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 border border-purple-200/70 dark:border-purple-800/60">
+              <i class="fa-solid fa-people-group mr-1"></i> Markazi
+            </span>
+            <span class="px-3 py-1 rounded-xl text-xs font-semibold bg-sky-100/80 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300 border border-sky-200/70 dark:border-sky-800/60">
+              <i class="fa-solid fa-laptop-code mr-1"></i> Coding Group DQ4
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Content: Animated Profile Frame + Image -->
+        <div class="img_about lg:col-span-5 flex justify-center items-center reveal-right">
+          <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center animate-float">
+            <!-- Outer Orbit Ring -->
+            <div class="absolute inset-0 rounded-full border-2 border-dashed border-darqo-400/60 dark:border-darqo-500/50 animate-spin-slow"></div>
+            <!-- Inner Orbit Ring -->
+            <div class="absolute inset-4 rounded-full border-2 border-dotted border-sky-500/50 animate-spin-reverse"></div>
+            <!-- Glowing Backdrop -->
+            <div class="absolute inset-8 rounded-full bg-gradient-to-tr from-darqo-600 to-cyan-400 blur-2xl opacity-30 dark:opacity-40"></div>
+
+            <!-- Main Avatar Container -->
+            <div class="relative w-60 h-60 sm:w-68 sm:h-68 md:w-76 md:h-76 rounded-full p-2 bg-gradient-to-tr from-darqo-600 via-sky-400 to-indigo-500 shadow-2xl">
+              <div class="w-full h-full rounded-full overflow-hidden bg-slate-900 flex items-center justify-center relative">
+                <!-- Ilustrasi SVG Keren Santri Developer sebagai Primary/Fallback -->
+                <img
+                  src="C:\Users\Faiq\Downloads\43272 (1).jpeg"' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230284c7'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='shirt' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f8fafc'/%3E%3Cstop offset='100%25' stop-color='%23cbd5e1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' fill='url(%23bg)'/%3E%3Ccircle cx='330' cy='80' r='45' fill='%2338bdf8' fill-opacity='0.18'/%3E%3Ccircle cx='70' cy='310' r='60' fill='%230ea5e9' fill-opacity='0.2'/%3E%3Ctext x='42' y='95' fill='%237dd3fc' font-family='monospace' font-size='22' opacity='0.65'%3E%26lt;SantriCode/%26gt;%3C/text%3E%3Ctext x='255' y='340' fill='%237dd3fc' font-family='monospace' font-size='20' opacity='0.65'%3E%7B DQ4 %7D%3C/text%3E%3C!-- Badan / Koko Putih Santri --%3E%3Cpath d='M95 390 C95 300, 305 300, 305 390 Z' fill='url(%23shirt)'/%3E%3Crect x='186' y='285' width='28' height='95' rx='6' fill='%23e2e8f0'/%3E%3Ccircle cx='200' cy='310' r='3.5' fill='%230284c7'/%3E%3Ccircle cx='200' cy='332' r='3.5' fill='%230284c7'/%3E%3Ccircle cx='200' cy='354' r='3.5' fill='%230284c7'/%3E%3C!-- Leher & Wajah --%3E%3Crect x='178' y='245' width='44' height='48' rx='16' fill='%23f1c27d'/%3E%3Cpath d='M142 180 C142 125, 258 125, 258 180 C258 235, 232 268, 200 268 C168 268, 142 235, 142 180 Z' fill='%23ffdbac'/%3E%3C!-- Peci Hitam Khas Santri --%3E%3Cpath d='M138 162 C138 112, 262 112, 262 162 L258 175 C220 166, 180 166, 142 175 Z' fill='%230f172a'/%3E%3Cpath d='M140 166 Q200 156 260 166' stroke='%2338bdf8' stroke-width='3' fill='none'/%3E%3C!-- Kacamata Modern --%3E%3Crect x='155' y='186' width='36' height='24' rx='6' fill='%230284c7' fill-opacity='0.2' stroke='%230f172a' stroke-width='3.5'/%3E%3Crect x='209' y='186' width='36' height='24' rx='6' fill='%230284c7' fill-opacity='0.2' stroke='%230f172a' stroke-width='3.5'/%3E%3Cline x1='191' y1='196' x2='209' y2='196' stroke='%230f172a' stroke-width='3.5'/%3E%3C!-- Mata & Senyum --%3E%3Ccircle cx='173' cy='198' r='4' fill='%230f172a'/%3E%3Ccircle cx='227' cy='198' r='4' fill='%230f172a'/%3E%3Cpath d='M183 230 Q200 244 217 230' stroke='%230f172a' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"
+                  alt="about img - Faiq Santri Daar El Qolam 4"
+                  class="w-full h-full object-cover rounded-full"
+                />
+              </div>
+            </div>
+
+            <!-- Floating Mini Card Badges -->
+            <div class="absolute -left-2 sm:-left-6 top-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-darqo-100 dark:bg-darqo-900 text-darqo-600 dark:text-darqo-300 flex items-center justify-center">
+                <i class="fa-solid fa-terminal text-sm"></i>
+              </span>
+              <div class="text-left">
+                <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Focus</p>
+                <p class="text-xs font-extrabold text-slate-800 dark:text-white">Dunia &amp; Akhirat</p>
+              </div>
+            </div>
+
+            <div class="absolute -right-2 sm:-right-4 bottom-10 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 flex items-center justify-center">
+                <i class="fa-solid fa-award text-sm"></i>
+              </span>
+              <div class="text-left">
+                <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Campus</p>
+                <p class="text-xs font-extrabold text-slate-800 dark:text-white">Daar El Qolam 4</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated Blue Wave (#0284c7) -->
+    <div class="wave wave-container h-20 sm:h-28 md:h-32">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="wave-parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(2, 132, 199, 0.35)" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(2, 132, 199, 0.55)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(2, 132, 199, 0.75)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#0284c7" />
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. EDUCATION SECTION (#education)
+       ======================================================================== -->
+  <section id="education" class="relative bg-[#0284c7] text-white pt-10 pb-0 z-10">
+    <div class="education max-w-6xl mx-auto px-5 sm:px-8 pb-16 sm:pb-24">
+      <!-- Title -->
+      <div class="edu-title text-center mb-14 reveal">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-white/15 text-sky-100 text-xs font-bold uppercase tracking-widest mb-3">
+          Academic Journey
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">Rekam Pendidikan</h1>
+        <div class="flex items-center justify-center gap-3 my-3 text-sky-200">
+          <span class="h-0.5 w-12 bg-sky-200/60 rounded-full"></span>
+          <span class="w-3 h-3 rounded-full border-2 border-white bg-darqo-500"></span>
+          <span class="h-0.5 w-12 bg-sky-200/60 rounded-full"></span>
+        </div>
+        <p class="text-sky-100 text-sm sm:text-base font-medium">History of Education</p>
+      </div>
+
+      <!-- Interactive Timeline -->
+      <div class="relative max-w-4xl mx-auto">
+        <!-- Vertical Line -->
+        <div class="absolute left-5 md:left-1/2 top-2 bottom-2 w-1 bg-white/30 rounded-full md:-translate-x-1/2"></div>
+
+        <!-- Item 1: MTsS Daar El Qolam 4 -->
+        <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 reveal">
+          <!-- Left Card on Desktop -->
+          <div class="w-full md:w-[45%] pl-14 md:pl-0 md:text-right">
+            <div class="bg-white/15 hover:bg-white/20 backdrop-blur-md border border-white/25 rounded-3xl p-6 shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+              <span class="date-edu inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-darqo-700 font-extrabold text-xs mb-3 shadow-sm">
+                <i class="fa-regular fa-calendar-check"></i> 2024 - now
+              </span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-white group-hover:text-sky-100 transition">
+                MTsS Daar El Qolam 4
+              </h2>
+              <p class="desc-edu text-sky-100 mt-2 text-sm sm:text-base leading-relaxed">
+                Menempa diri melalui mental akal dan kemandirian
+              </p>
+            </div>
+          </div>
+
+          <!-- Center Node -->
+          <div class="absolute left-5 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white text-darqo-600 flex items-center justify-center shadow-lg ring-4 ring-sky-300/40 z-10">
+            <i class="fa-solid fa-graduation-cap text-sm"></i>
+          </div>
+
+          <!-- Spacer Right -->
+          <div class="hidden md:block md:w-[45%]"></div>
+        </div>
+
+        <!-- Item 2: MIN 2 Tangerang Selatan -->
+        <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between reveal">
+          <!-- Spacer Left -->
+          <div class="hidden md:block md:w-[45%]"></div>
+
+          <!-- Center Node -->
+          <div class="absolute left-5 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white text-darqo-600 flex items-center justify-center shadow-lg ring-4 ring-sky-300/40 z-10">
+            <i class="fa-solid fa-school text-sm"></i>
+          </div>
+
+          <!-- Right Card on Desktop -->
+          <div class="w-full md:w-[45%] pl-14 md:pl-0">
+            <div class="bg-white/15 hover:bg-white/20 backdrop-blur-md border border-white/25 rounded-3xl p-6 shadow-xl transition-all duration-300 hover:-translate-y-1.5 group">
+              <span class="date-edu inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-900/50 text-sky-100 border border-white/20 font-bold text-xs mb-3">
+                <i class="fa-regular fa-calendar"></i> 2018 - 2024
+              </span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-white group-hover:text-sky-100 transition">
+                MIN 2 Tangerang Selatan
+              </h2>
+              <p class="desc-edu text-sky-100 mt-2 text-sm sm:text-base leading-relaxed">
+                Pembinaan dasar agama dan pendidikan
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Transition Wave -->
+    <div class="wave wave-container h-16 sm:h-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path fill="#0284c7" fill-opacity="1" d="M0,224L60,202.7C120,181,240,139,360,144C480,149,600,203,720,213.3C840,224,960,192,1080,197.3C1200,203,1320,245,1380,266.7L1440,288L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. SKILLS SECTION (#skill)
+       ======================================================================== -->
+  <section id="skill" class="relative py-16 sm:py-24 z-10">
+    <div class="skill max-w-7xl mx-auto px-5 sm:px-8">
+      <!-- Title -->
+      <div class="skill-title text-center mb-10 reveal">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-darqo-100 dark:bg-darqo-900/60 text-darqo-700 dark:text-darqo-300 text-xs font-bold uppercase tracking-widest mb-3">
+          Capabilities &amp; Talents
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          SKILLS
+        </h1>
+        <div class="flex items-center justify-center gap-2 my-3 text-darqo-600 dark:text-darqo-400">
+          <span class="h-0.5 w-10 bg-darqo-500 rounded-full"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-darqo-500"></span>
+          <span class="h-0.5 w-4 bg-darqo-500 rounded-full"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-darqo-500"></span>
+          <span class="h-0.5 w-10 bg-darqo-500 rounded-full"></span>
+        </div>
+        <p class="text-slate-500 dark:text-slate-400 text-sm sm:text-base font-medium">Non Akademik &amp; Teknologi</p>
+      </div>
+
+      <!-- Interactive Category Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2.5 sm:gap-3 mb-12 reveal">
+        <button data-filter="all" class="filter-btn active px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-darqo-600 text-white shadow-lg shadow-darqo-600/30 transition-all duration-200">
+          <i class="fa-solid fa-layer-group mr-1.5"></i> Semua (12)
+        </button>
+        <button data-filter="tech" class="filter-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-darqo-400 transition-all duration-200">
+          <i class="fa-solid fa-code mr-1.5"></i> Coding &amp; Tech (9)
+        </button>
+        <button data-filter="non-akademik" class="filter-btn px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-darqo-400 transition-all duration-200">
+          <i class="fa-solid fa-medal mr-1.5"></i> Organisasi &amp; Non-Akademik (3)
+        </button>
+      </div>
+
+      <!-- Skills Grid (Seluruh 12 Skill Asli Dipertahankan) -->
+      <div id="skills-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
+
+        <!-- 1. HTML (basic) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-orange-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-html5-plain colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">HTML</p>
+            <span class="basic mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300">
+              basic
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-orange-500 h-full rounded-full transition-all duration-1000" style="width: 65%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. CSS (LOWER) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-blue-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-css3-plain colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">CSS</p>
+            <span class="basic mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">
+              LOWER
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-blue-500 h-full rounded-full transition-all duration-1000" style="width: 55%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. JavaScript (LOWER) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-yellow-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-yellow-50 dark:bg-yellow-950/40 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-javascript-plain colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">JavaScript</p>
+            <span class="basic mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">
+              LOWER
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-yellow-400 h-full rounded-full transition-all duration-1000" style="width: 50%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Scout (medium) -->
+        <div data-category="non-akademik" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-amber-600 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-amber-100/70 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-compass text-3xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Scout</p>
+            <span class="medium mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">
+              medium
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-amber-600 h-full rounded-full transition-all duration-1000" style="width: 78%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Speaking (pro) -->
+        <div data-category="non-akademik" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-darqo-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-darqo-50 dark:bg-darqo-950/60 text-darqo-600 dark:text-darqo-400 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-microphone-lines text-3xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Speaking</p>
+            <span class="medium mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-darqo-600 text-white shadow-sm">
+              pro
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-darqo-500 h-full rounded-full transition-all duration-1000" style="width: 92%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Silat (pro) -->
+        <div data-category="non-akademik" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-rose-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-hand-fist text-3xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Silat</p>
+            <span class="medium mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-rose-600 text-white shadow-sm">
+              pro
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-rose-500 h-full rounded-full transition-all duration-1000" style="width: 94%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Laravel (Absolute) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-red-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-red-50 dark:bg-red-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-laravel-original colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Laravel</p>
+            <span class="NON mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              Absolute
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-red-500 h-full rounded-full transition-all duration-1000" style="width: 35%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. ReactJS (ABSOLUTE) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-cyan-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-cyan-50 dark:bg-cyan-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-react-original colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">ReactJS</p>
+            <span class="NON mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              ABSOLUTE
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-cyan-500 h-full rounded-full transition-all duration-1000" style="width: 35%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. phpMyAdmin (ABSOLUTE) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-teal-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-teal-50 dark:bg-teal-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-mysql-plain colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">phpMyAdmin</p>
+            <span class="NON mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              ABSOLUTE
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-teal-500 h-full rounded-full transition-all duration-1000" style="width: 35%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Github (basic) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-slate-500 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="fa-brands fa-github text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Github</p>
+            <span class="basic mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300">
+              basic
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-slate-700 dark:bg-slate-300 h-full rounded-full transition-all duration-1000" style="width: 65%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Postman (ABSOLUTE) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-orange-50 dark:bg-orange-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-postman-plain colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Postman</p>
+            <span class="non mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              ABSOLUTE
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-orange-500 h-full rounded-full transition-all duration-1000" style="width: 35%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. Figma (ABSOLUTE) -->
+        <div data-category="tech" class="skill-card group bg-white dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-purple-400 text-center reveal">
+          <div class="skill-card-inner flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-purple-950/50 flex items-center justify-center mb-3.5 group-hover:scale-110 transition-transform">
+              <i class="devicon-figma-plain colored text-4xl"></i>
+            </div>
+            <p class="font-extrabold text-slate-800 dark:text-white text-base">Figma</p>
+            <span class="non mt-1.5 inline-block px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              ABSOLUTE
+            </span>
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+              <div class="bg-purple-500 h-full rounded-full transition-all duration-1000" style="width: 35%"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       5. CONTACT SECTION (#contact)
+       ======================================================================== -->
+  <section id="contact" class="relative py-16 sm:py-24 z-10">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <!-- Title -->
+      <div class="contact text-center mb-14 reveal">
+        <div class="contact-title">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-darqo-100 dark:bg-darqo-900/60 text-darqo-700 dark:text-darqo-300 text-xs font-bold uppercase tracking-widest mb-3">
+            Get In Touch
+          </span>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Contact
+          </h1>
+          <div class="flex items-center justify-center gap-2 my-3 text-darqo-600 dark:text-darqo-400">
+            <span class="h-0.5 w-8 bg-darqo-500 rounded-full"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-darqo-500"></span>
+            <span class="h-0.5 w-4 bg-darqo-500 rounded-full"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-darqo-500"></span>
+            <span class="h-0.5 w-4 bg-darqo-500 rounded-full"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-darqo-500"></span>
+            <span class="h-0.5 w-8 bg-darqo-500 rounded-full"></span>
+          </div>
+          <p class="text-slate-500 dark:text-slate-400 text-sm sm:text-base font-medium">Contact me for more</p>
+        </div>
+      </div>
+
+      <!-- Contact Grid -->
+      <div class="row grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg rounded-[2rem] p-6 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-xl">
+
+        <!-- Left Illustration -->
+        <div class="col left lg:col-span-5 flex flex-col items-center text-center reveal-left">
+          <div class="w-full max-w-xs sm:max-w-sm animate-float">
+            <!-- Custom Crisp Vector Illustration -->
+            <svg viewBox="0 0 400 320" class="w-full h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0284c7" />
+                  <stop offset="100%" stop-color="#38bdf8" />
+                </linearGradient>
+              </defs>
+              <circle cx="200" cy="160" r="130" fill="#0284c7" fill-opacity="0.08" />
+              <circle cx="200" cy="160" r="95" fill="#38bdf8" fill-opacity="0.12" />
+              <!-- Envelope / Message Card -->
+              <rect x="65" y="75" width="270" height="170" rx="22" fill="url(#cardGrad)" />
+              <path d="M72 85 L200 175 L328 85" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M72 235 L155 165 M328 235 L245 165" fill="none" stroke="#bae6fd" stroke-width="4" stroke-linecap="round" />
+              <!-- Floating Paper Plane -->
+              <g transform="translate(275, 35)">
+                <circle cx="32" cy="32" r="32" fill="#0f172a" />
+                <path d="M16 33 L48 18 L39 48 L30 37 L16 33 Z" fill="#38bdf8" />
+                <path d="M30 37 L48 18" stroke="#ffffff" stroke-width="2" />
+              </g>
+              <!-- Floating Code Tag -->
+              <g transform="translate(40, 215)">
+                <rect width="92" height="36" rx="12" fill="#0f172a" />
+                <text x="15" y="23" fill="#38bdf8" font-family="monospace" font-weight="bold" font-size="14">&lt;Faiq/&gt;</text>
+              </g>
+            </svg>
+          </div>
+          <div class="mt-4 space-y-1.5">
+            <h3 class="text-lg font-extrabold text-slate-800 dark:text-white">Mari Terhubung &amp; Berkolaborasi!</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              Punya ide proyek, diskusi organisasi, atau peluang bisnis? Kirim pesan langsung melalui formulir di samping.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Form -->
+        <div class="col right lg:col-span-7 reveal-right">
+          <form id="contact-form" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="name" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                  Fullname
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                    <i class="fa-regular fa-user"></i>
+                  </span>
+                  <input type="text" name="name" id="name" required placeholder="Masukkan nama lengkap..."
+                         class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-darqo-500 focus:border-transparent transition" />
+                </div>
+              </div>
+
+              <div>
+                <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                  Email
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                    <i class="fa-regular fa-envelope"></i>
+                  </span>
+                  <input type="email" name="email" id="email" required placeholder="nama@email.com"
+                         class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-darqo-500 focus:border-transparent transition" />
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="subject" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                  Subject
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                    <i class="fa-regular fa-comment-dots"></i>
+                  </span>
+                  <input type="text" name="subject" id="subject" required placeholder="Judul pesan Anda..."
+                         class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-darqo-500 focus:border-transparent transition" />
+                </div>
+              </div>
+
+              <div>
+                <label for="topic" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">
+                  Topic
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                    <i class="fa-solid fa-tag"></i>
+                  </span>
+                  <select name="topic" id="topic"
+                          class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-darqo-500 focus:border-transparent transition">
+                    <option value="information">Information</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Others</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-form pt-2">
+              <button type="submit" id="submit"
+                      class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-darqo-600 to-darqo-500 hover:from-darqo-700 hover:to-darqo-600 text-white font-bold text-sm sm:text-base shadow-lg shadow-darqo-600/30 hover:shadow-darqo-600/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Submit</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       6. FOOTER & CATATAN KREDIT
+       ======================================================================== -->
+  <footer class="relative z-10 mt-8">
+    <!-- Animated Blue Wave (#0284c7) -->
+    <div class="wave wave-container h-20 sm:h-28">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <g class="wave-parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(2, 132, 199, 0.35)" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(2, 132, 199, 0.55)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(2, 132, 199, 0.75)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#0284c7" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="foot-content bg-[#0284c7] text-white pt-6 pb-12 px-5 sm:px-8">
+      <div class="max-w-5xl mx-auto text-center space-y-6">
+        <div class="space-y-1">
+          <p class="text-xl sm:text-2xl font-extrabold tracking-tight">Interest with me ?</p>
+          <p class="text-sky-100 text-sm sm:text-base">Follow My Social Media</p>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="social-icons flex items-center justify-center gap-4">
+          <a href="https://www.facebook.com/ismailhere.7/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+             class="w-12 h-12 rounded-2xl bg-white/15 hover:bg-white text-white hover:text-[#0284c7] border border-white/25 flex items-center justify-center text-xl transition-all duration-300 hover:-translate-y-1 shadow-md">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/muhh.ismail__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+             class="w-12 h-12 rounded-2xl bg-white/15 hover:bg-white text-white hover:text-[#0284c7] border border-white/25 flex items-center justify-center text-xl transition-all duration-300 hover:-translate-y-1 shadow-md">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-white/20 max-w-2xl mx-auto pt-6 space-y-4">
+          <!-- Kredit Asli Muhammad Ismail -->
+          <div class="createby text-sm text-sky-100 font-medium">
+            <p>© Muhammad Faiq Azzahidi, 2026. All rights reserved.</p>
+          </div>
+
+          <!-- Catatan Asli Faiq (Resolution Box) -->
+          <div class="resolution bg-sky-950/35 backdrop-blur-sm border border-white/20 rounded-2xl p-4 sm:p-5 max-w-xl mx-auto text-center shadow-inner">
+            <h2 class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-amber-300 mb-1">
+              <i class="fa-solid fa-circle-info mr-1"></i> MOHON PERHATIAN !
+              <span class="block sm:inline font-semibold text-white normal-case tracking-normal">
+               Ini adalah portofolio kembangan Faiq
+              </span>
+            </h2>
+            <p class="text-xs sm:text-sm text-sky-100 leading-relaxed mt-1">
+              Selamat menikmati
+              <span class="block font-bold text-white mt-1">- Faiq -</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Scroll-To-Top Button (#scrool-up) -->
+  <div id="scrool-up" class="fixed bottom-6 right-6 z-50 opacity-0 pointer-events-none translate-y-4 transition-all duration-300">
+    <a href="#about" aria-label="Kembali ke atas"
+       class="w-12 h-12 rounded-2xl bg-slate-900 dark:bg-darqo-500 text-white hover:bg-darqo-600 dark:hover:bg-darqo-400 shadow-xl shadow-slate-900/30 flex items-center justify-center text-lg hover:-translate-y-1 transition-all duration-200 border border-white/15">
+      <i class="fa-solid fa-arrow-up"></i>
+    </a>
+  </div>
+
+  <!-- Toast Notification Modal untuk Submit Form -->
+  <div id="toast-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl transform scale-95 transition-transform duration-300" id="toast-card">
+      <div class="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-4 text-3xl">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="text-xl font-extrabold text-slate-900 dark:text-white mb-2">Pesan Berhasil Terkirim!</h3>
+      <p id="toast-message" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+        Terima kasih telah menghubungi Faiq. Pesan Anda telah dicatat.
+      </p>
+      <button id="close-toast" class="w-full py-3 rounded-2xl bg-darqo-600 hover:bg-darqo-700 text-white font-bold text-sm transition">
+        Tutup
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       JAVASCRIPT INTERACTIVITY & ANIMATIONS
+       ======================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ----------------------------------------------------------------------
+         1. DARK / LIGHT MODE TOGGLE
+         ---------------------------------------------------------------------- */
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const htmlEl = document.documentElement;
+
+      // Cek preferensi sistem atau localStorage
+      const savedTheme = localStorage.getItem('faiq-portfolio-theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        htmlEl.classList.add('dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        htmlEl.classList.toggle('dark');
+        const isDark = htmlEl.classList.contains('dark');
+        localStorage.setItem('faiq-portfolio-theme', isDark ? 'dark' : 'light');
+        if (isDark) {
+          themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         2. MOBILE MENU TOGGLE
+         ---------------------------------------------------------------------- */
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+      const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenuIcon.className = isOpen ? 'fa-solid fa-xmark text-lg' : 'fa-solid fa-bars text-lg';
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          mobileMenuIcon.className = 'fa-solid fa-bars text-lg';
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+         3. TYPING ANIMATION (Hero Headline)
+         ---------------------------------------------------------------------- */
+      const typingEl = document.getElementById('typing-text');
+      const phrases = [
+        'Saya santri di Daar El Qolam',
+        'Aktif di PRAMUKA, JMQ & Markazi',
+        'Bagian dari Coding Group DQ4',
+        'Calon Pengusaha Sukses Masa Depan'
+      ];
+      let phraseIndex = 0;
+      let charIndex = phrases[0].length;
+      let isDeleting = false;
+
+      function typeLoop() {
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+          charIndex--;
+          typingEl.textContent = currentPhrase.substring(0, charIndex);
+        } else {
+          charIndex++;
+          typingEl.textContent = currentPhrase.substring(0, charIndex);
+        }
+
+        let delay = isDeleting ? 42 : 85;
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+          delay = 2200; // Jeda setelah selesai mengetik
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          delay = 400;
+        }
+
+        setTimeout(typeLoop, delay);
+      }
+      // Mulai loop setelah jeda awal agar teks utama langsung terbaca saat load
+      setTimeout(() => {
+        isDeleting = true;
+        typeLoop();
+      }, 2600);
+
+      /* ----------------------------------------------------------------------
+         4. SCROLL REVEAL, ACTIVE NAV INDICATOR & SCROLL-TO-TOP BUTTON
+         ---------------------------------------------------------------------- */
+      const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const scrollUpBtn = document.getElementById('scrool-up');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.12 });
+
+      revealElements.forEach(el => observer.observe(el));
+
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+
+        // Tampilkan tombol scroll-up saat scroll > 350px
+        if (scrollY > 350) {
+          scrollUpBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+          scrollUpBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        } else {
+          scrollUpBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+          scrollUpBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        }
+
+        // Active link highlight berdasarkan posisi scroll
+        let currentSection = 'about';
+        sections.forEach(sec => {
+          const top = sec.offsetTop - 160;
+          if (scrollY >= top) {
+            currentSection = sec.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href').replace('#', '');
+          if (href === currentSection) {
+            link.classList.add('text-darqo-600', 'dark:text-darqo-400', 'bg-darqo-50', 'dark:bg-darqo-950/60');
+            link.classList.remove('text-slate-600', 'dark:text-slate-300');
+          } else {
+            link.classList.remove('text-darqo-600', 'dark:text-darqo-400', 'bg-darqo-50', 'dark:bg-darqo-950/60');
+            link.classList.add('text-slate-600', 'dark:text-slate-300');
+          }
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+         5. INTERACTIVE SKILL CATEGORY FILTER & 3D TILT EFFECT
+         ---------------------------------------------------------------------- */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const skillCards = document.querySelectorAll('.skill-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.getAttribute('data-filter');
+
+          // Update tombol aktif
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-darqo-600', 'text-white', 'shadow-lg', 'shadow-darqo-600/30');
+            b.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-800');
+          });
+          btn.classList.add('bg-darqo-600', 'text-white', 'shadow-lg', 'shadow-darqo-600/30');
+          btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-800');
+
+          // Filter kartu
+          skillCards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.classList.remove('hidden');
+              setTimeout(() => card.classList.add('active'), 20);
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // Efek 3D Tilt pada setiap kartu skill saat mouse bergerak
+      skillCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+          card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+         6. INTERACTIVE CONTACT FORM & TOAST MODAL
+         ---------------------------------------------------------------------- */
+      const contactForm = document.getElementById('contact-form');
+      const toastModal = document.getElementById('toast-modal');
+      const toastCard = document.getElementById('toast-card');
+      const toastMessage = document.getElementById('toast-message');
+      const closeToastBtn = document.getElementById('close-toast');
+
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const topic = document.getElementById('topic').options[document.getElementById('topic').selectedIndex].text;
+
+        toastMessage.innerHTML = `Halo <strong>${name}</strong>! Pesan Anda dengan topik <strong>"${topic}"</strong> (${subject}) telah berhasil dikirim. Balasan akan dikirimkan ke <strong>${email}</strong>.`;
+        toastModal.classList.remove('hidden');
+        toastModal.classList.add('flex');
+        setTimeout(() => {
+          toastCard.classList.remove('scale-95');
+          toastCard.classList.add('scale-100');
+        }, 10);
+
+        contactForm.reset();
+      });
+
+      function hideToast() {
+        toastCard.classList.remove('scale-100');
+        toastCard.classList.add('scale-95');
+        setTimeout(() => {
+          toastModal.classList.add('hidden');
+          toastModal.classList.remove('flex');
+        }, 200);
+      }
+
+      closeToastBtn.addEventListener('click', hideToast);
+      toastModal.addEventListener('click', (e) => {
+        if (e.target === toastModal) hideToast();
+      });
+
+      /* ----------------------------------------------------------------------
+         7. SUBTLE BACKGROUND PARTICLE NETWORK
+         ---------------------------------------------------------------------- */
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      const particleCount = Math.min(45, Math.floor(window.innerWidth / 30));
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          r: Math.random() * 2.2 + 1
+        });
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0284c7';
+        ctx.strokeStyle = 'rgba(2, 132, 199, 0.15)';
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (dist < 130) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+    });
+  </script>
+</body>
+</html>
